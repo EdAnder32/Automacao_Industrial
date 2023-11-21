@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botão Circular</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .toggle-button {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: green;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .toggle-button:hover {
+            background-color: darkgreen;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .stop {
+            background-color: red !important;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="toggleButton" class="toggle-button" onclick="toggleLED()">Start</button>
+
+    <script>
+        function toggleLED() {
+            var button = document.getElementById('toggleButton');
+            var isStop = button.classList.contains('stop');
+
+            // Se o botão está no estado "stop", envia o comando '0' para apagar o LED
+            // Se está no estado "start", envia o comando '1' para acender o LED
+            var command = isStop ? '0' : '1';
+
+            fetch('/toggle_led', { method: 'POST', body: command })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    button.classList.toggle('stop', !isStop);
+                    button.textContent = isStop ? 'Start' : 'Stop';
+                    // Adiciona/remova a classe "hover" para forçar a atualização da cor
+                    button.classList.add('hover');
+                    setTimeout(() => button.classList.remove('hover'), 10);
+                })
+                .catch(error => console.error('Erro:', error));
+        }
+    </script>
+
+</body>
+</html>
