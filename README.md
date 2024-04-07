@@ -8,6 +8,9 @@ Após concluido corretamente, o sistema deverá ser capaz de:
 2. Permitir a entrada de sensores pra aprimorar a monitoração do funcionamento do Motor
 3. Forneçer uma interface gráfica simples, agradável e legível pra o operador
 
+## Como usar?
+O esquema de ligação será previamente fornecido.
+
 ## Materiais Usados pra o projecto
 ### ESP-WROOM-32
 ![Imagem do ESP23](https://github.com/EdAnder32/Automacao_Industrial/blob/main/templates/20240407_113257.jpg)
@@ -24,4 +27,6 @@ Macho-Fêmea, Fêmea-Macho, Macho-Macho, epa sei lá eu... Eles são responsáve
 ### Placa de Ensaios
 ![Imagem da Placa de Ensaios](https://github.com/EdAnder32/Automacao_Industrial/blob/main/templates/20240407_113309.jpg)
 Placa em que alguns dos Jumpers serão conectados. Na real, pode nem usar se não quiser
-![Imagem da Placa de Ensaios](https://github.com/EdAnder32/Automacao_Industrial/blob/main/templates/20240407_113309.jpg)
+
+## Licença
+Este projeto está licenciado sob a [MIT License](LICENSE).
