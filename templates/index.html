@@ -1,66 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botão Circular</title>
+    <title>Controle do Motor</title>
+    <link rel="icon" type="image/png" href="https://th.bing.com/th/id/R.7fe3baa7d14308d15d0a46180d460949?rik=ya00CD91ZvjvZQ&pid=ImgRaw&r=0">
     <style>
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-image: url('https://th.bing.com/th/id/OIG2.C5wxkFJphRqSbXI2Z8Fq?pid=ImgGn');
+            background-size: cover;
+            background-position: center;
             margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-
-        .toggle-button {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: green;
-            color: white;
-            font-size: 16px;
-            border: none;
+        .container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            font-size: 24px;
+            border-radius: 5px;
+        }
+        .button {
+            padding: 15px 25px;
+            font-size: 24px;
             cursor: pointer;
-            transition: background-color 0.3s, box-shadow 0.3s;
+            outline: none;
+            color: #fff;
+            background-color: #04AA6D;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
         }
-
-        .toggle-button:hover {
-            background-color: darkgreen;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        .button:hover {
+            background-color: #3e8e41;
         }
-
-        .stop {
-            background-color: red !important;
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+        .online {
+            color: green;
+        }
+        .offline {
+            color: red;
         }
     </style>
 </head>
 <body>
-
-    <button id="toggleButton" class="toggle-button" onclick="toggleLED()">Start</button>
-
-    <script>
-        function toggleLED() {
-            var button = document.getElementById('toggleButton');
-            var isStop = button.classList.contains('stop');
-
-            // Se o botão está no estado "stop", envia o comando '0' para apagar o LED
-            // Se está no estado "start", envia o comando '1' para acender o LED
-            var command = isStop ? '0' : '1';
-
-            fetch('/toggle_led', { method: 'POST', body: command })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    button.classList.toggle('stop', !isStop);
-                    button.textContent = isStop ? 'Start' : 'Stop';
-                    // Adiciona/remova a classe "hover" para forçar a atualização da cor
-                    button.classList.add('hover');
-                    setTimeout(() => button.classList.remove('hover'), 10);
-                })
-                .catch(error => console.error('Erro:', error));
+<div class="container">
+    <h1>Controle do Motor</h1>
+    <div class="status" id="motorStatus">MOTOR 1: OFFLINE</div>
+    <div class="status" id="uptimeStatus">Tempo Online: 0 segundos</div>
+    <button class="button" onclick="toggleMotor()">Ligar Motor</button>
+</div>
+<script>
+    function updateStatus(online) {
+        document.getElementById('motorStatus').innerHTML = online ? 'MOTOR 1: ONLINE' : 'MOTOR 1: OFFLINE';
+        document.getElementById('motorStatus').className = online ? 'status online' : 'status offline';
+        if (online) {
+            startTime = Date.now();
+            setInterval(updateUptime, 1000);
+        } else {
+            startTime = 0; // Zera o startTime quando o motor é desligado
         }
-    </script>
-
+    }
+    function updateUptime() {
+        if (startTime) {
+            const currentTime = Date.now();
+            const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+            document.getElementById('uptimeStatus').innerHTML = 'Tempo Online: ' + elapsedTime + ' segundos';
+        }
+    }
+    function toggleMotor() {
+        fetch('/toggle_motor', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                updateStatus(data.online);
+                document.querySelector('.button').innerText = data.online ? 'Desligar Motor' : 'Ligar Motor';
+            })
+            .catch(error => console.error('Erro:', error));
+    }
+    updateStatus(false);
+</script>
 </body>
-</html>
+</html>";
