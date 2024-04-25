@@ -8,6 +8,14 @@ Após concluido corretamente, o sistema deverá ser capaz de:
 2. Permitir a entrada de sensores pra aprimorar a monitoração do funcionamento do Motor
 3. Forneçer uma interface gráfica simples, agradável e legível pra o operador
 
+## WebSite
+Ainda em desenvolvimento, pra o aprimoramento de uma web page bem mais fluída e amigável. Esse site será responsável por atribuir aos usuários o controle total ou parcial do motor, bem como oferecer a possibilidade de monitoramento de dados atuais, registos de manuntençao, entre outros... Abaixo, verifique a página de accionamento do motor (ainda em desenvolvimento)
+![Imagem do site](https://github.com/EdAnder32/Automacao_Industrial/blob/main/templates/Controle%20do%20Motor%20-%20Google%20Chrome%2024_04_2024%2000_19_27.png)
+
+## Maquete
+Maquete pra exemplificar o sistema el]etrico, eletrônico e digital
+![Maquete](https://github.com/EdAnder32/Automacao_Industrial/blob/main/templates/Maquete_Semi-Finalizada.jpg)
+
 ## Como usar?
 O esquema de ligação será previamente fornecido.
 
